@@ -29,14 +29,14 @@
 ---
 <!-- 智能客服示例图 -->
 <div align="left">
-  <img src="./assets/chat_demo1.png" width="750" alt="智能客服聊天界面示例 1">
+  <img src="./KnowledgeBase-RAG-LLM-System/assets/chat_demo1.png" width="750" alt="智能客服聊天界面示例 1">
 </div>
 
 - 本地知识库预存了衣物尺码推荐表、材质维护、穿衣搭配等示例内容（data见assets）
 - 对标电商，可按个人需求替换为自己的业务文本
 ---
 <div align="left">
-  <img src="./assets/chat_demo2.png" width="750" alt="智能客服聊天界面示例 2">
+  <img src="./KnowledgeBase-RAG-LLM-System/assets/chat_demo2.png" width="750" alt="智能客服聊天界面示例 2">
 </div>
 
 - 支持结合历史消息进行连续问答
