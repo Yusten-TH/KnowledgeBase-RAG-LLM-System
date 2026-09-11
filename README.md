@@ -1,134 +1,132 @@
 # KnowledgeBase-RAG-LLM-System
 
- ## 基于 **Streamlit** 的本地知识库上传与**RAG**问答学习项目
-适合作为本地知识库问答与 RAG 检索增强的入门实践
-- 在网页端上传 `txt` 文件，自动切分后写入 Chroma 向量库
-- 在网页端以聊天形式提问，基于知识库内容进行检索增强回答（RAG） 
-- 支持 会话历史查看，流式思维链输出
-- 技术栈：Python / Streamlit / LangChain / Chroma / Embeddings / Qwen ChatModel
+## A local knowledge base upload and **RAG** Q&A learning project based on **Streamlit**
+Suitable as an entry-level hands-on project for local knowledge base Q&A and RAG retrieval-augmented generation
+- Upload `txt` files on the web page, which are automatically split and written into the Chroma vector store
+- Ask questions via a chat interface on the web page, and get retrieval-augmented answers (RAG) based on the knowledge base content
+- Supports conversation history viewing and streaming chain-of-thought output
+- Tech stack: Python / Streamlit / LangChain / Chroma / Embeddings / Qwen ChatModel
 
 ---
 
-## ✨ 功能一览
+## ✨ Feature Overview
 
-### 1) 知识库更新服务（Upload）
-- Streamlit 页面上传文件，显示基本格式
-- 自动读取文本内容
-- 根据配置进行分段（RecursiveCharacterTextSplitter）
-- 写入 Chroma 向量库（本地持久化）
-- 使用 **MD5 去重**：相同内容不重复入库
+### 1) Knowledge Base Update Service (Upload)
+- Upload files on the Streamlit page, showing the basic format
+- Automatically read the text content
+- Split into chunks based on configuration (RecursiveCharacterTextSplitter)
+- Write into the Chroma vector store (local persistence)
+- Uses **MD5 deduplication**: identical content is not re-indexed
 
-### 2) 智能客服（RAG Chat）
+### 2) Intelligent Customer Service (RAG Chat)
 - Streamlit Chat UI
-- 显示历史消息（session_state）
-- LangChain 链式调用：`Retrieval -> Prompt -> LLM -> Output`
-- 支持 **流式输出**
-- 支持 **消息历史文件存储**（FileChatMessageHistory）
+- Shows message history (session_state)
+- LangChain chained calls: `Retrieval -> Prompt -> LLM -> Output`
+- Supports **streaming output**
+- Supports **message history file storage** (FileChatMessageHistory)
 
-### 3) 效果预览（demo）
+### 3) Demo Preview
 ---
-<!-- 智能客服示例图 -->
+<!-- Customer service demo image -->
 <div align="left">
-  <img src="./KnowledgeBase-RAG-LLM-System/assets/chat_demo1.png" width="750" alt="智能客服聊天界面示例 1">
+  <img src="./KnowledgeBase-RAG-LLM-System/assets/chat_demo1.png" width="750" alt="Customer service chat interface example 1">
 </div>
 
-- 本地知识库预存了衣物尺码推荐表、材质维护、穿衣搭配等示例内容（data见assets）
-- 对标电商，可按个人需求替换为自己的业务文本
+- The local knowledge base is pre-loaded with sample content such as clothing size recommendation tables, fabric care, and outfit matching (data in assets)
+- Built for e-commerce; you can replace it with your own business texts as needed
 ---
 <div align="left">
-  <img src="./KnowledgeBase-RAG-LLM-System/assets/chat_demo2.png" width="750" alt="智能客服聊天界面示例 2">
+  <img src="./KnowledgeBase-RAG-LLM-System/assets/chat_demo2.png" width="750" alt="Customer service chat interface example 2">
 </div>
 
-- 支持结合历史消息进行连续问答
+- Supports continuous Q&A combined with message history
 
 ---
 
-
-## 🧩 项目结构
+## 🧩 Project Structure
 
 ```text
 KnowledgeBase-RAG-LLM-System/
-├─ app_upload.py              # 知识库上传服务（Streamlit）
-├─ app_chat.py                # 智能客服问答（Streamlit）
-├─ knowledge_base.py          # 知识库处理：读取、切分、写库、去重
-├─ rag.py                     # RAG 链组装
-├─ vector_stores.py           # 向量库检索封装（持久化）
-├─ file_history_store.py      # 会话历史存储
-├─ config_data.py             # 模型、路径、chunk 等参数配置
-├─ requirements.txt           # 项目依赖（配置环境）
-└─ assets/                    # README 演示图片与示例素材文本所在
+├─ app_upload.py              # Knowledge base upload service (Streamlit)
+├─ app_chat.py                # Intelligent customer service Q&A (Streamlit)
+├─ knowledge_base.py          # Knowledge base processing: read, split, index, dedupe
+├─ rag.py                     # RAG chain assembly
+├─ vector_stores.py           # Vector store retrieval wrapper (persistent)
+├─ file_history_store.py      # Conversation history storage
+├─ config_data.py             # Model, path, chunk and other parameter configuration
+├─ requirements.txt           # Project dependencies (environment setup)
+└─ assets/                    # README demo images and sample material texts
 ```
 ---
-## ✅ 环境准备
+## ✅ Environment Setup
 
-### 1) 安装依赖
+### 1) Install Dependencies
 ```bash
 pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
-- 终端运行，建议虚拟环境加载，清华镜像源加速
+- Run in a terminal; a virtual environment is recommended, with the Tsinghua mirror for faster download
 ---
 
-## ⚙️ 配置说明
+## ⚙️ Configuration
 
-- config_data.py 中包含核心配置，根据实际需要，手动修改模型配置、chunk大小...
-- 默认嵌入器 text-embedding-v4 及 Qwen3-max
-- 注意，DashScope/通义千问相关的 API Key（例如 DASHSCOPE_API_KEY）需要在环境变量中先行配置
+- `config_data.py` contains the core configuration; manually modify the model settings, chunk size, etc., as needed
+- Defaults: embedding model `text-embedding-v4` and `Qwen3-max`
+- Note: DashScope / Tongyi Qianwen API Keys (e.g. `DASHSCOPE_API_KEY`) must be configured in environment variables first
 ---
 
-## 🚀 快速运行
-### 1) 启动知识库上传服务
+## 🚀 Quick Start
+### 1) Start the Knowledge Base Upload Service
 ```bash
 streamlit run app_upload.py
 ```
-- 打开页面后上传 .txt 文件后，即可写入本地向量库。
+- After opening the page, upload a .txt file and it will be written to the local vector store.
 
-### 2) 启动智能客服（RAG Chat）
+### 2) Start the Intelligent Customer Service (RAG Chat)
 ```bash
 streamlit run app_chat.py
 ```
-- 输入问题后，会先检索知识库，再结合检索内容由模型综合回答
+- After entering a question, it will first retrieve from the knowledge base, then the model will give a synthesized answer combining the retrieved content
 ---
 
-## 🛠 常见问题
+## 🛠 FAQ
 
-### Q1：上传文件后，聊天问答仍然像“没有检索到资料”？
-#### 可能原因：
-- 上传服务和问答服务使用了不同的向量库持久化目录
-- `collection_name` 配置不一致
-- 上传文件后未正确写入本地数据目录
+### Q1: After uploading a file, chat Q&A still seems like "no data was retrieved"?
+#### Possible causes:
+- The upload service and the Q&A service use different vector store persistence directories
+- The `collection_name` configuration is inconsistent
+- The uploaded file was not written correctly to the local data directory
 
-### Q2：上传文件后，回答显示较慢或没有正常输出？
-#### 可能原因：
-- 文本切分参数或检索参数设置不合适，调整chunk、检索k...
-- 模型接口或网络请求响应较慢
-- 本地向量库未正确初始化
+### Q2: After uploading a file, the answer is slow or produces no output?
+#### Possible causes:
+- Text splitting or retrieval parameters are not well tuned; adjust chunk size, retrieval k, ...
+- The model API or network requests respond slowly
+- The local vector store was not initialized correctly
 
-### Q3：项目运行报路径或配置错误怎么办？
-#### 建议优先检查：
-- `config_data.py` 中的模型配置、路径配置是否正确
-- 本地数据目录是否存在
-- API Key 是否已配置到环境变量
-
----
-## ✨ 优化方向（仅供参考）
-- 增加深度Rerank，提升检索结果质量，比如langchain框架中提供的EGE rerank模块
-- 优化Streamlit页面交互与展示，Streamlit内置功能丰富，可按需丰富UI
-- 支持更多文件类型（多模态），如PDF / Markdown / Word，增加langchain插件即可轻松实现
-- 思维链 -> 思维树 ？
-- 单模型 -> 多模型 ？ 例如豆包的多层推理架构，多模型混合输出？
-- Chroma -> FAISS ?  这里采用轻量Chroma适合个人复现，FAISS的高效检索则适配企业
-- 待定...
-- 总之，这是一个基础但延展性很好的RAG项目,扩展升级 -> 企业级RAG -> 功能插件 -> Agent -> AI产品
+### Q3: What if the project reports path or configuration errors?
+#### Recommended to check first:
+- Whether the model and path configuration in `config_data.py` is correct
+- Whether the local data directory exists
+- Whether the API Key is configured in environment variables
 
 ---
+## ✨ Improvement Directions (for reference only)
+- Add deep reranking to improve retrieval result quality, e.g. the EGE rerank module provided by the LangChain framework
+- Optimize Streamlit page interaction and presentation; Streamlit's built-in features are rich and the UI can be enhanced as needed
+- Support more file types (multimodal), such as PDF / Markdown / Word, easily achievable by adding LangChain plugins
+- Chain of thought -> Tree of thought?
+- Single model -> Multi-model? e.g. Doubao's multi-layer reasoning architecture, mixed multi-model output?
+- Chroma -> FAISS? Here a lightweight Chroma is used as it suits personal reproduction, while FAISS's efficient retrieval fits enterprise use
+- To be determined...
+- In short, this is a basic but highly extensible RAG project: extend and upgrade -> enterprise-grade RAG -> feature plugins -> Agent -> AI product
 
+---
 
 ## 📄 License
 
-- 本项目仅用于学习与交流，如需商用请自行补全安全、合规与授权相关内容。
+- This project is intended for learning and communication only; if you use it commercially, please add the necessary security, compliance, and licensing content yourself.
 ---
 
-## 🙌 致谢
+## 🙌 Acknowledgements
 
 - Black Horse
 - Streamlit
